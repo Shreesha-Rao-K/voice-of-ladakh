@@ -10,6 +10,84 @@
 // Initialize GSAP and ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+/* ==========================================================================
+   PREMIUM $20,000 BUDGET ELEMENTS (PRELOADER & CURSOR)
+   ========================================================================== */
+
+// 1. Cinematic Preloader
+const preloaderTextFill = document.querySelector('.preloader-text::after');
+const preloaderProgress = document.querySelector('.preloader-progress');
+const preloader = document.querySelector('.preloader');
+
+let progress = { val: 0 };
+gsap.to(progress, {
+    val: 100,
+    duration: 2.5,
+    ease: "power2.inOut",
+    onUpdate: () => {
+        const p = Math.round(progress.val);
+        preloaderProgress.textContent = `${p}%`;
+        // We use CSS variable or direct style to update the pseudo-element width via JS is tricky, 
+        // so we manipulate a CSS variable on the text element.
+        document.querySelector('.preloader-text').style.setProperty('--progress', `${p}%`);
+    },
+    onComplete: () => {
+        gsap.to(preloader, {
+            yPercent: -100,
+            duration: 1,
+            ease: "expo.inOut",
+            onComplete: () => preloader.remove()
+        });
+    }
+});
+
+// Fix pseudo element animation via inject style
+const style = document.createElement('style');
+style.innerHTML = `.preloader-text::after { width: var(--progress, 0%); }`;
+document.head.appendChild(style);
+
+// 2. Custom Cursor
+const cursor = document.querySelector('.custom-cursor');
+const follower = document.querySelector('.custom-cursor-follower');
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let followerX = mouseX;
+let followerY = mouseY;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Immediate cursor update
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+});
+
+// Smooth follower animation using GSAP ticker
+gsap.ticker.add(() => {
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+});
+
+// Add hover effects to all clickable elements
+const clickables = document.querySelectorAll('a, button, input, textarea');
+clickables.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover-active');
+        follower.classList.add('hover-active');
+    });
+    el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover-active');
+        follower.classList.remove('hover-active');
+    });
+});
+
+/* ========================================================================== */
+
 // Navbar styling on scroll (GSAP optimized)
 const navbar = document.getElementById('navbar');
 ScrollTrigger.create({
