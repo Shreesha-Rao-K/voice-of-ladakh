@@ -24,16 +24,21 @@ This project is a highly optimized, static Single Page Application (SPA).
 - **Production Secure:** External libraries are secured with Subresource Integrity (SRI) hashes to prevent supply-chain vulnerabilities.
 
 ## 💻 Running Locally
-No build steps or npm packages are required.
+To run the full-stack server and application locally:
 1. Clone the repository:
    ```bash
    git clone https://github.com/Shreesha-Rao-K/voice-of-ladakh.git
    ```
-2. Open `index.html` directly in your browser or run a simple local server:
+2. Install dependencies:
    ```bash
-   python -m http.server 8000
+   npm install
    ```
-3. Visit `http://localhost:8000`
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+4. Visit `http://localhost:3000`
 
 ## ⚖️ License
-This project is open-source and available under the [MIT License](LICENSE).
+**© 2026 Shreesha Rao K. All Rights Reserved.**
+This project is strictly proprietary. Unauthorized cloning, reproduction, distribution, or modification is expressly prohibited. See the [LICENSE](LICENSE) file for details.

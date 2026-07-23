@@ -1,0 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+/* CSS Reset & Variables */
+/*
+ * ==============================================================================
+ *  COPYRIGHT (c) 2026 SHREESHA RAO K. ALL RIGHTS RESERVED.
+ *  This code is the exclusive property of Shreesha Rao K.
+ *  Unauthorized copying, reproduction, or distribution of this file,
+ *  via any medium, is strictly prohibited.
+ * ==============================================================================
+ */
+
+:root {
+    --bg-color: #000000;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --accent-red: #e63946;
+    --accent-blue: #3b82f6;
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.8);
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Source Sans 3', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* ANTI-THEFT: Prevent Text Highlighting */
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.massive-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.scene-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    text-shadow: 0 5px 20px rgba(0,0,0,0.8);
+}
+
+.subtitle {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    color: var(--text-secondary);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.lead {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+.highlight { color: var(--accent-red); }
+.text-red { color: var(--accent-red); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-secondary { color: var(--text-secondary); }
+.w-100 { width: 100%; }
+.max-w-800 { max-width: 800px; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 4rem; }
+.bg-pure-black { background-color: #000; }
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    transition: var(--transition);
+}
+
+nav.scrolled {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: var(--transition);
+    opacity: 0.8;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    color: var(--accent-red);
+}
+
+/* Cinematic Layout */
+.cinematic-container {
+    width: 100%;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.scene-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000; /* Black background for any empty space */
+    z-index: 0;
+}
+
+.cinematic-img {
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 115%;
+    object-fit: contain; /* Prevents cropping, preserves height */
+    opacity: 0.7; /* Dim the image slightly by default */
+}
+
+/* Overlays to make text pop */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.gradient-dark {
+    background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
+}
+
+.heavy-dark {
+    background: rgba(0,0,0,0.6);
+}
+
+.gradient-right {
+    background: linear-gradient(to left, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 70%, #000 100%);
+}
+
+.gradient-left {
+    background: linear-gradient(to right, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 70%, #000 100%);
+}
+
+.scene-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: flex;
+}
+
+.flex-center { justify-content: center; align-items: center; }
+.flex-left { justify-content: flex-start; align-items: center; }
+.flex-right { justify-content: flex-end; align-items: center; }
+
+.text-block {
+    max-width: 600px;
+}
+
+.text-center.text-block {
+    max-width: 1000px;
+}
+
+/* Components */
+a:focus-visible, button:focus-visible {
+    outline: 2px dashed var(--accent-red);
+    outline-offset: 4px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(230, 57, 70, 0.1);
+    color: var(--accent-red);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.section-tag {
+    display: block;
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+}
+
+.card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.card-glass h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.card-glass p { font-size: 1rem; margin: 0; color: var(--text-secondary); }
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.card-minimal {
+    border-top: 2px solid var(--accent-red);
+    padding-top: 1rem;
+}
+
+.card-minimal p {
+    color: var(--text-secondary);
+}
+
+.demands-box {
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid var(--accent-blue);
+    padding: 1.5rem;
+}
+
+.styled-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.styled-list li {
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    color: var(--text-secondary);
+}
+
+.styled-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+}
+
+.styled-list strong { color: var(--text-primary); }
+
+.quote-block {
+    border-left: 4px solid var(--accent-red);
+    padding-left: 1.5rem;
+}
+
+.quote-block p {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+.quote-author {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--font-heading);
+    color: var(--accent-red);
+    letter-spacing: 1px;
+}
+
+/* Timeline specific */
+.horizontal-scroll-wrapper {
+    width: 100%;
+    overflow: hidden; /* GSAP will move the inner container */
+    padding: 2rem 0;
+}
+
+.timeline-cards {
+    display: flex;
+    gap: 3rem;
+    width: max-content; /* Critical for horizontal scroll */
+}
+
+.t-card {
+    width: 400px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.7;
+    z-index: 10;
+}
+
+.scroll-indicator span {
+    font-family: var(--font-heading);
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+}
+
+.scroll-indicator .line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--text-primary), transparent);
+    animation: scrollLine 2s infinite ease-in-out;
+}
+
+@keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    50.1% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@media (max-width: 768px) {
+    .scene-content { padding: 0 2rem; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .massive-title { font-size: 3.5rem; }
+}
