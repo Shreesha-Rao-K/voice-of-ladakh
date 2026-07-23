@@ -2,18 +2,14 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Serve all static files from the root directory
-app.use(express.static(__dirname));
+const rootDir = __dirname;
 
-// Send all other requests to index.html (SPA routing fallback)
+// Serve static assets natively via Express
+app.use(express.static(rootDir));
+
+// SPA fallback
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Start the server (for local testing, though Vercel handles this via exports)
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    res.sendFile(path.join(rootDir, 'index.html'));
 });
 
 module.exports = app;
