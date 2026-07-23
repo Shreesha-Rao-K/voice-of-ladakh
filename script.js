@@ -195,23 +195,6 @@ if(indicator) {
     });
 }
 
-/* ==============================================================================
- *  JOIN THE MOVEMENT (Static UI Interaction)
- * ============================================================================== */
-const pledgeForm = document.getElementById('pledgeForm');
-if(pledgeForm) {
-    pledgeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = pledgeForm.querySelector('button');
-        btn.innerText = "Joining...";
-        
-        // Simulate a network request for cinematic effect, then show success
-        setTimeout(() => {
-            pledgeForm.style.display = 'none';
-            document.getElementById('pledgeSuccess').style.display = 'block';
-        }, 800);
-    });
-}
 
 /* ==============================================================================
  *  ANTI-THEFT PROTOCOLS (Property of Shreesha Rao K)

@@ -425,8 +425,6 @@ a:focus-visible, button:focus-visible {
         margin-bottom: 2rem;
     }
     
-    /* Pledge Form */
-    #pledgeForm input, #pledgeForm textarea { font-size: 16px; } /* Prevents iOS auto-zoom */
     
     /* Anti-theft Visual Watermark */
     .shreesha-watermark { font-size: 20vw !important; opacity: 0.5; }
