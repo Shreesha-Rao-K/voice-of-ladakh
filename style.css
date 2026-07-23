@@ -39,10 +39,12 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* ANTI-THEFT: Prevent Text Highlighting */
+    /* ANTI-THEFT: Prevent Text Highlighting & Image Dragging */
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
 }
 
 /* Typography */
