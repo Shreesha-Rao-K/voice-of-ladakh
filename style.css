@@ -175,8 +175,15 @@ nav.scrolled {
     left: 0;
     width: 100%;
     height: 115%;
-    object-fit: contain; /* Prevents cropping, preserves height */
+    display: block;
+}
+
+.cinematic-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Switched to cover for better responsive art direction */
     opacity: 0.7; /* Dim the image slightly by default */
+    display: block;
 }
 
 /* Overlays to make text pop */
