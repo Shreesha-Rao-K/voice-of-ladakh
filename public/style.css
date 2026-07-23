@@ -386,8 +386,48 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 768px) {
-    .scene-content { padding: 0 2rem; }
-    .grid-3 { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .massive-title { font-size: 3.5rem; }
+    /* Layout & Padding */
+    .scene-content { padding: 0 1.5rem; flex-direction: column; justify-content: center; text-align: center; }
+    .flex-left, .flex-right { align-items: center; justify-content: center; }
+    .grid-3 { grid-template-columns: 1fr; gap: 1rem; }
+    
+    /* Navigation */
+    .nav-links { display: none; } /* Hide links on mobile to save space */
+    .logo { font-size: 1.4rem; }
+    
+    /* Typography Scaling */
+    .massive-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+    .scene-title { font-size: clamp(2rem, 8vw, 3rem); }
+    .subtitle { font-size: 1.1rem; }
+    .lead { font-size: 1.1rem; margin-bottom: 1.5rem; }
+    
+    /* Horizontal Timeline Optimization for Mobile */
+    .timeline-container { 
+        height: auto; 
+        min-height: 100vh;
+        overflow-x: hidden; 
+        overflow-y: auto; 
+        display: block; 
+    }
+    .timeline-content {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 100px; /* Account for navbar */
+    }
+    .timeline-cards {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    .timeline-card {
+        width: 100%;
+        min-width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    /* Pledge Form */
+    #pledgeForm input, #pledgeForm textarea { font-size: 16px; } /* Prevents iOS auto-zoom */
+    
+    /* Anti-theft Visual Watermark */
+    .shreesha-watermark { font-size: 20vw !important; opacity: 0.5; }
 }
