@@ -1,0 +1,8 @@
+{
+  "name": "voice-of-ladakh",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo \"Static Site\"",
+    "start": "echo \"Static Site\""
+  }
+}
