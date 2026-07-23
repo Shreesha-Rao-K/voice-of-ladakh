@@ -45,6 +45,15 @@ body {
     -ms-user-select: none;
     user-drag: none;
     -webkit-user-drag: none;
+
+    /* Hide ugly default browser scrollbar for cinematic immersion */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* Typography */
