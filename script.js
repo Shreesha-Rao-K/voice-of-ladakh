@@ -73,22 +73,46 @@ gsap.ticker.add(() => {
     follower.style.top = followerY + 'px';
 });
 
-// Add hover effects to all clickable elements
-const clickables = document.querySelectorAll('a, button, input, textarea');
+// Add hover effects to all clickable elements (Magnetic interaction)
+const clickables = document.querySelectorAll('a, button, .card-glass');
 clickables.forEach(el => {
     el.addEventListener('mouseenter', () => {
         cursor.classList.add('hover-active');
-        follower.classList.add('hover-active');
+        follower.classList.add('magnetic-active');
+        gsap.to(el, { scale: 1.02, duration: 0.3, ease: "power2.out" });
     });
     el.addEventListener('mouseleave', () => {
         cursor.classList.remove('hover-active');
-        follower.classList.remove('hover-active');
+        follower.classList.remove('magnetic-active');
+        gsap.to(el, { scale: 1, x: 0, y: 0, duration: 0.3, ease: "power2.out" });
+    });
+    el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const elX = rect.left + rect.width / 2;
+        const elY = rect.top + rect.height / 2;
+        gsap.to(el, {
+            x: (mouseX - elX) * 0.1,
+            y: (mouseY - elY) * 0.1,
+            duration: 0.3,
+            ease: "power2.out"
+        });
     });
 });
 
 /* ========================================================================== */
 
-// Navbar styling on scroll (GSAP optimized)
+// Initialize Lenis for Smooth Scrolling (Buttery smooth momentum)
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo.out
+    smoothWheel: true
+});
+
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+// Navbar styling on scroll
 const navbar = document.getElementById('navbar');
 ScrollTrigger.create({
     start: "top -50",
@@ -96,18 +120,62 @@ ScrollTrigger.create({
     toggleClass: {className: 'scrolled', targets: navbar}
 });
 
+// Premium SplitType Heading Animations
+const titles = document.querySelectorAll('.scene-title, .text-5xl, h1');
+titles.forEach(title => {
+    const split = new SplitType(title, { types: 'lines, words', lineClass: 'line' });
+    gsap.from(split.words, {
+        y: 100,
+        opacity: 0,
+        rotationZ: 5,
+        duration: 1.2,
+        stagger: 0.04,
+        ease: "expo.out",
+        scrollTrigger: {
+            trigger: title,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        }
+    });
+});
+
 // Setup Cinematic Scenes
 const scenes = document.querySelectorAll('.scene');
 
 scenes.forEach((scene, i) => {
-    // Determine the elements to animate within this scene
     const bgImage = scene.querySelector('.cinematic-img');
     const scrubReveals = scene.querySelectorAll('.scrub-reveal');
     const staggerReveals = scene.querySelectorAll('.stagger-reveal');
 
-    // Subtle parallax on the background image (scrubbing)
+    // Premium Clip-Path Reveal with Scale
     if (bgImage) {
+        // Dynamically wrap the image in a clip-path container if not already
+        if (!bgImage.parentElement.classList.contains('clip-reveal-container')) {
+             const wrapper = document.createElement('div');
+             wrapper.className = 'clip-reveal-container';
+             wrapper.style.width = '100%';
+             wrapper.style.height = '100%';
+             wrapper.style.position = 'absolute';
+             wrapper.style.top = '0';
+             wrapper.style.left = '0';
+             bgImage.parentNode.insertBefore(wrapper, bgImage);
+             wrapper.appendChild(bgImage);
+             bgImage.classList.add('clip-reveal-img');
+        }
+
+        gsap.to(bgImage.parentElement, {
+            clipPath: "inset(0% 0 0 0)",
+            ease: "expo.out",
+            scrollTrigger: {
+                trigger: scene,
+                start: "top 80%",
+                end: "center center",
+                scrub: 1.5
+            }
+        });
+        
         gsap.to(bgImage, {
+            scale: 1,
             yPercent: 15,
             ease: "none",
             scrollTrigger: {
@@ -119,33 +187,32 @@ scenes.forEach((scene, i) => {
         });
     }
 
-    // Scrub reveal (text tied precisely to scroll position)
+    // Scrub reveal (Refined to be smoother)
     if (scrubReveals.length > 0) {
         gsap.from(scrubReveals, {
             opacity: 0,
-            y: 50,
+            y: 40,
             scrollTrigger: {
                 trigger: scene,
                 start: "top 75%",
                 end: "center center",
-                scrub: 1
+                scrub: 1.5 // Added smoothing to scrub
             }
         });
     }
 
-    // Stagger reveal (plays animation sequence once scrolled into view)
+    // Stagger reveal (Refined ease)
     if (staggerReveals.length > 0) {
-        // Find children to stagger
         const children = staggerReveals[0].children;
         gsap.from(children, {
             opacity: 0,
-            y: 30,
-            stagger: 0.2,
-            duration: 1,
-            ease: "power2.out",
+            y: 40,
+            stagger: 0.15,
+            duration: 1.2,
+            ease: "expo.out",
             scrollTrigger: {
                 trigger: scene,
-                start: "top 60%",
+                start: "top 70%",
                 toggleActions: "play none none reverse"
             }
         });
