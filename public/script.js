@@ -118,33 +118,20 @@ if(indicator) {
 }
 
 /* ==============================================================================
- *  PLEDGE API LOGIC (Full-Stack Implementation)
+ *  JOIN THE MOVEMENT (Static UI Interaction)
  * ============================================================================== */
 const pledgeForm = document.getElementById('pledgeForm');
 if(pledgeForm) {
-    pledgeForm.addEventListener('submit', async (e) => {
+    pledgeForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = document.getElementById('pledgeName').value;
-        const message = document.getElementById('pledgeMessage').value;
         const btn = pledgeForm.querySelector('button');
-        btn.innerText = "Submitting...";
+        btn.innerText = "Joining...";
         
-        try {
-            const response = await fetch('/api/pledge', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, message })
-            });
-            
-            if (response.ok) {
-                pledgeForm.style.display = 'none';
-                document.getElementById('pledgeSuccess').style.display = 'block';
-            } else {
-                btn.innerText = "Error. Try Again.";
-            }
-        } catch (err) {
-            btn.innerText = "Error. Try Again.";
-        }
+        // Simulate a network request for cinematic effect, then show success
+        setTimeout(() => {
+            pledgeForm.style.display = 'none';
+            document.getElementById('pledgeSuccess').style.display = 'block';
+        }, 800);
     });
 }
 
@@ -156,9 +143,9 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 
 // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
 document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
-        (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))) {
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || 
+        (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's'))) {
         e.preventDefault();
         console.warn("PROPERTY OF SHREESHA RAO K. ACCESS DENIED.");
     }

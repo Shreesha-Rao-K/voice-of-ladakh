@@ -2,9 +2,7 @@
   "name": "jantar-mantar-protest-website",
   "version": "1.0.0",
   "description": "![Voice of Ladakh](src/hero-banner.jpg)",
-  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +16,5 @@
   "bugs": {
     "url": "https://github.com/Shreesha-Rao-K/voice-of-ladakh/issues"
   },
-  "homepage": "https://github.com/Shreesha-Rao-K/voice-of-ladakh#readme",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1"
-  }
+  "homepage": "https://github.com/Shreesha-Rao-K/voice-of-ladakh#readme"
 }
