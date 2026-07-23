@@ -552,6 +552,13 @@ a:focus-visible, button:focus-visible {
     border-color: rgba(255, 255, 255, 0);
 }
 
+/* Disable custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+    .custom-cursor, .custom-cursor-follower {
+        display: none !important;
+    }
+}
+
 /* Preloader */
 .preloader {
     position: fixed;
@@ -577,14 +584,15 @@ a:focus-visible, button:focus-visible {
 
 .preloader-text {
     font-family: var(--font-heading);
-    font-size: 4rem;
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 700;
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-    letter-spacing: 0.5rem;
+    letter-spacing: clamp(0.2rem, 2vw, 0.5rem);
     text-transform: uppercase;
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .preloader-text::after {
