@@ -123,7 +123,7 @@ ScrollTrigger.create({
 // Premium SplitType Heading Animations
 const titles = document.querySelectorAll('.scene-title, .text-5xl, h1');
 titles.forEach(title => {
-    const split = new SplitType(title, { types: 'lines, words', lineClass: 'line' });
+    const split = new SplitType(title, { types: 'lines, words', lineClass: 'split-line' });
     gsap.from(split.words, {
         y: 100,
         opacity: 0,

@@ -55,6 +55,11 @@ h1, h2, h3, h4 {
     letter-spacing: 1px;
 }
 
+/* SplitType Utility */
+.split-line {
+    overflow: hidden;
+}
+
 .massive-title {
     font-size: clamp(4rem, 10vw, 8rem);
     line-height: 0.9;
