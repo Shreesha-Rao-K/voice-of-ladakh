@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- CUSTOM CURSOR -->
@@ -43,15 +43,27 @@
         SHREESHA RAO K
     </div>
     
+    <!-- READING PROGRESS BAR -->
+    <div class="reading-progress-bar"></div>
+
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">VOICE OF LADAKH</div>
             <ul class="nav-links">
                 <li><a href="#epicenter">Epicenter</a></li>
-                <li><a href="#foundation">The Pioneer</a></li>
-                <li><a href="#politics">Crackdown</a></li>
-                <li><a href="#global">Solidarity</a></li>
+                <li><a href="#foundation">Pioneer</a></li>
+                <li><a href="#crackdown">Crackdown</a></li>
+                <li><a href="#aftermath">Resolution</a></li>
             </ul>
+            <button class="sound-toggle" id="soundToggle" aria-label="Toggle Ambient Audio">
+                <span class="sound-label">SOUNDSCAPE</span>
+                <div class="sound-bars">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </button>
         </div>
     </nav>
 
@@ -135,9 +147,9 @@
             </div>
         </section>
 
-        <!-- Chapter 3: The Crackdown (Part 2) -->
+        <!-- Chapter 3: The Crackdown & Escalation -->
         <section class="scene" id="crackdown">
-            <div class="scene-bg">
+            <div class="scene-bg" data-cursor="VIEW">
                 <picture class="cinematic-img" style="display:block; width:100%; height:100%;">
                     <source media="(max-width: 768px)" srcset="src/phone/the-2026-escalation-section.png">
                     <img src="src/computer/the-2026-escalation-section.jpg" alt="Police Crackdown" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
@@ -146,22 +158,31 @@
             </div>
             <div class="scene-content flex-center">
                 <div class="text-block text-center w-100 stagger-reveal">
-                    <span class="section-tag text-red">July 18 & 20, 2026</span>
-                    <h2 class="scene-title">Tear Gas & Detentions</h2>
-                    <p class="subtitle mx-auto">When the youth mobilized for the "Chalo Sansad" (March to Parliament), they were met with Section 163 prohibitory orders, barricades, and lathi-charges.</p>
+                    <span class="section-tag text-red">Timeline of Escalation</span>
+                    <h2 class="scene-title">Tear Gas & Barricades</h2>
+                    <p class="subtitle mx-auto">When the youth mobilized for the "Chalo Sansad" (March to Parliament), they were met with Section 163 prohibitory orders and immediate police force.</p>
                     
-                    <div class="grid-3 mt-5 text-left">
-                        <div class="card-minimal">
-                            <h3 class="highlight">The Forced Removal</h3>
-                            <p>On July 18, under the cover of white sheets, Delhi Police stormed Jantar Mantar. A critically ill Wangchuk was forcibly detained and hospitalized.</p>
+                    <div class="editorial-timeline mt-5">
+                        <div class="timeline-item" data-cursor="READ">
+                            <span class="timeline-date">JULY 18, 2026</span>
+                            <div class="timeline-body">
+                                <h3>The Midnight Raid</h3>
+                                <p>Under the cover of white sheets, police stormed Jantar Mantar. A critically ill Sonam Wangchuk was forcibly detained and hospitalized under heavy armed guard.</p>
+                            </div>
                         </div>
-                        <div class="card-minimal">
-                            <h3 class="highlight">Chalo Sansad</h3>
-                            <p>Infuriated by the police action, tens of thousands attempted to march on Parliament on July 20, resulting in tear gas and mass detentions.</p>
+                        <div class="timeline-item" data-cursor="READ">
+                            <span class="timeline-date">JULY 20, 2026</span>
+                            <div class="timeline-body">
+                                <h3>Chalo Sansad March</h3>
+                                <p>Infuriated by the detention, tens of thousands attempted to breach Parliament barricades. Tear gas shells were fired, resulting in hundreds of student detentions.</p>
+                            </div>
                         </div>
-                        <div class="card-minimal">
-                            <h3 class="highlight">Medanta Hospital</h3>
-                            <p>Despite being hospitalized under heavy guard, Wangchuk refused to break his fast, insisting the demands for the youth must be met.</p>
+                        <div class="timeline-item" data-cursor="READ">
+                            <span class="timeline-date">JULY 23, 2026</span>
+                            <div class="timeline-body">
+                                <h3>26-Day Fast Ends</h3>
+                                <p>Despite confinement at Medanta Hospital, Wangchuk maintained his strike until critical demands for educational reform were formally acknowledged.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

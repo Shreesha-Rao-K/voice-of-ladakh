@@ -108,9 +108,40 @@ const lenis = new Lenis({
     smoothWheel: true
 });
 
-lenis.on('scroll', ScrollTrigger.update);
+const progressBar = document.querySelector('.reading-progress-bar');
+lenis.on('scroll', (e) => {
+    ScrollTrigger.update();
+    if (progressBar && e.scroll !== undefined) {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progressPercent = (e.scroll / totalHeight) * 100;
+        progressBar.style.width = `${Math.min(100, Math.max(0, progressPercent))}%`;
+    }
+});
+
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
+
+// Soundscape Toggle
+const soundToggle = document.getElementById('soundToggle');
+if (soundToggle) {
+    soundToggle.addEventListener('click', () => {
+        soundToggle.classList.toggle('playing');
+    });
+}
+
+// Data Cursor Text States Engine
+const dataCursors = document.querySelectorAll('[data-cursor]');
+dataCursors.forEach(el => {
+    const label = el.getAttribute('data-cursor');
+    el.addEventListener('mouseenter', () => {
+        cursor.classList.add('cursor-text-active');
+        cursor.textContent = label;
+    });
+    el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('cursor-text-active');
+        cursor.textContent = '';
+    });
+});
 
 // Navbar styling on scroll
 const navbar = document.getElementById('navbar');
