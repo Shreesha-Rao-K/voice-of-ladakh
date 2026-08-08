@@ -823,11 +823,188 @@ a:focus-visible, button:focus-visible {
     mix-blend-mode: normal;
 }
 
-@media (max-width: 768px) {
-    .timeline-item {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-    }
+/* NAV CONTROLS: LANG & MAP */
+.map-trigger, .lang-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
 }
+
+.map-trigger:hover, .lang-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.kbd {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+}
+
+/* IMPACT STATS TICKER STRIP */
+.stats-strip {
+    padding: 6rem 2rem;
+    background: #000;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 10;
+}
+
+.stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    text-align: center;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 700;
+    color: var(--accent-gold);
+    line-height: 1;
+}
+
+.stat-unit {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    letter-spacing: 0.2em;
+    margin-top: 0.2rem;
+}
+
+.stat-label {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+/* MODAL BACKDROP & DRAWERS */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.evidence-lightbox, .chapter-map-drawer {
+    background: rgba(18, 18, 22, 0.95);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 800px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--glass-shadow);
+    color: var(--text-primary);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    color: var(--accent-red);
+}
+
+.chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.chapter-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.chapter-card:hover {
+    background: rgba(230, 57, 70, 0.1);
+    border-color: var(--accent-red);
+    transform: translateY(-3px);
+}
+
+.chap-num {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.chapter-card h4 {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    margin: 0;
+    text-transform: none;
+}
+
+.chapter-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.kbd-hint {
+    margin-top: 2rem;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
 
 

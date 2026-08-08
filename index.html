@@ -55,6 +55,8 @@
                 <li><a href="#crackdown">Crackdown</a></li>
                 <li><a href="#aftermath">Resolution</a></li>
             </ul>
+            <button class="map-trigger" id="mapTrigger" aria-label="Open Chapter Map">MAP <span class="kbd">M</span></button>
+            <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">EN</button>
             <button class="sound-toggle" id="soundToggle" aria-label="Toggle Ambient Audio">
                 <span class="sound-label">SOUNDSCAPE</span>
                 <div class="sound-bars">
@@ -244,7 +246,79 @@
             </div>
         </section>
 
+        <!-- IMPACT STATS TICKER STRIP -->
+        <section class="stats-strip" id="stats">
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="stat-number" data-target="26">0</span>
+                    <span class="stat-unit">DAYS</span>
+                    <span class="stat-label">Hunger Strike Duration</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" data-target="100">0</span>
+                    <span class="stat-unit">K+</span>
+                    <span class="stat-label">Youth & Students Mobilized</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" data-target="1">0</span>
+                    <span class="stat-unit">HISTORIC</span>
+                    <span class="stat-label">Ministerial Resignation</span>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- INVESTIGATIVE EVIDENCE DRAWER MODAL -->
+    <div class="modal-backdrop" id="evidenceModal">
+        <div class="evidence-lightbox">
+            <button class="modal-close" id="closeEvidence">&times;</button>
+            <div class="evidence-header">
+                <span class="section-tag text-red">Investigative Evidence</span>
+                <h3 id="evidenceTitle">Document Dossier</h3>
+            </div>
+            <div class="evidence-body" id="evidenceBody">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAPTER MAP MODAL -->
+    <div class="modal-backdrop" id="chapterMapModal">
+        <div class="chapter-map-drawer">
+            <button class="modal-close" id="closeMap">&times;</button>
+            <span class="section-tag text-gold">Interactive Directory</span>
+            <h2>Narrative Chapters</h2>
+            <div class="chapter-grid">
+                <a href="#epicenter" class="chapter-card">
+                    <span class="chap-num">01</span>
+                    <h4>Jantar Mantar Epicenter</h4>
+                    <p>The July 2026 examination crisis begins.</p>
+                </a>
+                <a href="#foundation" class="chapter-card">
+                    <span class="chap-num">02</span>
+                    <h4>The Education Pioneer</h4>
+                    <p>Wangchuk's 38-year fight for systemic reform.</p>
+                </a>
+                <a href="#crackdown" class="chapter-card">
+                    <span class="chap-num">03</span>
+                    <h4>Tear Gas & Barricades</h4>
+                    <p>July 18 midnight raid and parliamentary march.</p>
+                </a>
+                <a href="#global" class="chapter-card">
+                    <span class="chap-num">04</span>
+                    <h4>A Global Echo</h4>
+                    <p>Nationwide solidarity and international coverage.</p>
+                </a>
+                <a href="#aftermath" class="chapter-card">
+                    <span class="chap-num">05</span>
+                    <h4>Resignation & Resolution</h4>
+                    <p>Ministerial fall and the strategic road ahead.</p>
+                </a>
+            </div>
+            <div class="kbd-hint">Press <span class="kbd">ESC</span> to close or <span class="kbd">J</span> / <span class="kbd">K</span> to navigate</div>
+        </div>
+    </div>
 
     <!-- Cinematic Footer -->
     <footer class="cinematic-footer">

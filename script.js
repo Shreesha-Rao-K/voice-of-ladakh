@@ -122,11 +122,54 @@ lenis.on('scroll', (e) => {
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(500, 33);
 
-// Soundscape Toggle
+// Soundscape Web Audio API Ambient Synthesizer
 const soundToggle = document.getElementById('soundToggle');
+let audioCtx = null;
+let osc1 = null, osc2 = null, masterGain = null, filter = null;
+let isAudioPlaying = false;
+
+function initAudioSynth() {
+    if (audioCtx) return;
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+
+    filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+
+    osc1 = audioCtx.createOscillator();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(108, audioCtx.currentTime); // 108Hz Deep Ambient Base
+
+    osc2 = audioCtx.createOscillator();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(216, audioCtx.currentTime); // Harmonic 216Hz
+
+    osc1.connect(filter);
+    osc2.connect(filter);
+    filter.connect(masterGain);
+    masterGain.connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start();
+}
+
 if (soundToggle) {
     soundToggle.addEventListener('click', () => {
-        soundToggle.classList.toggle('playing');
+        if (!audioCtx) initAudioSynth();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        isAudioPlaying = !isAudioPlaying;
+        soundToggle.classList.toggle('playing', isAudioPlaying);
+
+        if (isAudioPlaying) {
+            masterGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 1.5);
+        } else {
+            masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+        }
     });
 }
 
@@ -280,17 +323,103 @@ if (timelineSection && timelineCards) {
     });
 }
 
-// Fade out the scroll indicator on first scroll
-const indicator = document.querySelector('.scrub-fade-out');
-if(indicator) {
-    gsap.to(indicator, {
-        opacity: 0,
+// GSAP Animated Impact Tickers
+const statNumbers = document.querySelectorAll('.stat-number');
+statNumbers.forEach(stat => {
+    const target = parseInt(stat.getAttribute('data-target'));
+    gsap.to(stat, {
+        innerText: target,
+        duration: 2.5,
+        ease: "power2.out",
+        snap: { innerText: 1 },
         scrollTrigger: {
-            trigger: document.body,
-            start: "top -50",
-            end: "top -150",
-            scrub: true
+            trigger: stat,
+            start: "top 85%",
+            once: true
         }
+    });
+});
+
+// Modals: Chapter Map & Evidence Lightbox
+const chapterMapModal = document.getElementById('chapterMapModal');
+const mapTrigger = document.getElementById('mapTrigger');
+const closeMap = document.getElementById('closeMap');
+
+function openMap() { chapterMapModal.classList.add('active'); }
+function closeMapModal() { chapterMapModal.classList.remove('active'); }
+
+if (mapTrigger) mapTrigger.addEventListener('click', openMap);
+if (closeMap) closeMap.addEventListener('click', closeMapModal);
+
+// Close Modals on Backdrop Click
+document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) backdrop.classList.remove('active');
+    });
+});
+
+// Keyboard Navigation & Shortcuts ('M', 'J', 'K', 'ESC')
+const sceneIds = ['epicenter', 'foundation', 'crackdown', 'aftermath', 'stats'];
+let currentSceneIndex = 0;
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'm' || e.key === 'M') {
+        chapterMapModal.classList.contains('active') ? closeMapModal() : openMap();
+    } else if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop').forEach(b => b.classList.remove('active'));
+    } else if (e.key === 'j' || e.key === 'J' || e.key === 'ArrowDown') {
+        currentSceneIndex = Math.min(sceneIds.length - 1, currentSceneIndex + 1);
+        const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
+        if (targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl);
+    } else if (e.key === 'k' || e.key === 'K' || e.key === 'ArrowUp') {
+        currentSceneIndex = Math.max(0, currentSceneIndex - 1);
+        const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
+        if (targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl);
+    }
+});
+
+// Bilingual Language Switcher Engine
+const langToggle = document.getElementById('langToggle');
+let currentLang = 'EN';
+
+const translations = {
+    HI: {
+        'VOICE OF LADAKH': 'लद्दाख की आवाज',
+        'Epicenter': 'मुख्य केंद्र',
+        'Pioneer': 'क्रांतिकारी',
+        'Crackdown': 'कार्रवाई',
+        'Resolution': 'समाधान',
+        'SCROLL TO EXPLORE': 'खोजने के लिए स्क्रॉल करें',
+        'Resignation & Resolution': 'इस्तीफा और संकल्प'
+    },
+    EN: {
+        'लद्दाख की आवाज': 'VOICE OF LADAKH',
+        'मुख्य केंद्र': 'Epicenter',
+        'क्रांतिकारी': 'Pioneer',
+        'कार्रवाई': 'Crackdown',
+        'समाधान': 'Resolution',
+        'खोजने के लिए स्क्रॉल करें': 'SCROLL TO EXPLORE',
+        'इस्तीफा और संकल्प': 'Resignation & Resolution'
+    }
+};
+
+if (langToggle) {
+    langToggle.addEventListener('click', () => {
+        currentLang = currentLang === 'EN' ? 'HI' : 'EN';
+        langToggle.textContent = currentLang;
+
+        const dict = translations[currentLang];
+        if (!dict) return;
+
+        Object.keys(dict).forEach(key => {
+            const val = dict[key];
+            const elements = document.body.querySelectorAll('*');
+            elements.forEach(node => {
+                if (node.children.length === 0 && node.textContent.trim() === key) {
+                    node.textContent = val;
+                }
+            });
+        });
     });
 }
 
