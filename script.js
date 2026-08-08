@@ -7,8 +7,9 @@
  * ==============================================================================
  */
 
-// Initialize GSAP and ScrollTrigger
+// Initialize GSAP and ScrollTrigger with GPU Compositor Acceleration
 gsap.registerPlugin(ScrollTrigger);
+gsap.config({ force3D: true });
 
 /* ==========================================================================
    PREMIUM $20,000 BUDGET ELEMENTS (PRELOADER & CURSOR)
@@ -119,7 +120,7 @@ lenis.on('scroll', (e) => {
 });
 
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
+gsap.ticker.lagSmoothing(500, 33);
 
 // Soundscape Toggle
 const soundToggle = document.getElementById('soundToggle');
