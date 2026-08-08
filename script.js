@@ -130,31 +130,36 @@ let isAudioPlaying = false;
 
 function initAudioSynth() {
     if (audioCtx) return;
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContext();
+    try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        audioCtx = new AudioContextClass();
 
-    masterGain = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
 
-    filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+        filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(250, audioCtx.currentTime);
 
-    osc1 = audioCtx.createOscillator();
-    osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(108, audioCtx.currentTime); // 108Hz Deep Ambient Base
+        osc1 = audioCtx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(108, audioCtx.currentTime); // 108Hz Deep Ambient Base
 
-    osc2 = audioCtx.createOscillator();
-    osc2.type = 'triangle';
-    osc2.frequency.setValueAtTime(216, audioCtx.currentTime); // Harmonic 216Hz
+        osc2 = audioCtx.createOscillator();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(216, audioCtx.currentTime); // Harmonic 216Hz
 
-    osc1.connect(filter);
-    osc2.connect(filter);
-    filter.connect(masterGain);
-    masterGain.connect(audioCtx.destination);
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(masterGain);
+        masterGain.connect(audioCtx.destination);
 
-    osc1.start();
-    osc2.start();
+        osc1.start();
+        osc2.start();
+    } catch (e) {
+        console.warn("Web Audio API not supported in this browser environment.", e);
+    }
 }
 
 if (soundToggle) {
@@ -411,11 +416,11 @@ if (langToggle) {
         const dict = translations[currentLang];
         if (!dict) return;
 
+        const allLeafNodes = Array.from(document.body.querySelectorAll('*')).filter(node => node.children.length === 0);
         Object.keys(dict).forEach(key => {
             const val = dict[key];
-            const elements = document.body.querySelectorAll('*');
-            elements.forEach(node => {
-                if (node.children.length === 0 && node.textContent.trim() === key) {
+            allLeafNodes.forEach(node => {
+                if (node.textContent.trim() === key) {
                     node.textContent = val;
                 }
             });
