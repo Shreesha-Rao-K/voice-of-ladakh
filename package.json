@@ -3,8 +3,13 @@
   "version": "1.1.0",
   "description": "An independent visual documentary chronicling Sonam Wangchuk, the 2026 NEET-UG examination crisis, and the Jantar Mantar youth uprising.",
   "private": true,
+  "main": "server.js",
   "scripts": {
-    "start": "npx serve ."
+    "start": "node server.js",
+    "build": "node -c server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [
     "documentary",
