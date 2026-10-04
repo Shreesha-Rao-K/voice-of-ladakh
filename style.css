@@ -1,12 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
-
 /* CSS Reset & Variables */
 /*
  * ==============================================================================
  *  COPYRIGHT (c) 2026 SHREESHA RAO K. ALL RIGHTS RESERVED.
- *  This code is the exclusive property of Shreesha Rao K.
- *  Unauthorized copying, reproduction, or distribution of this file,
- *  via any medium, is strictly prohibited.
+ *  Voice of Ladakh: An Independent Visual Chronicle of the 2026 Jantar Mantar Protests.
  * ==============================================================================
  */
 
@@ -32,7 +28,7 @@
 }
 
 body {
-    background-color: #000000;
+    background-color: #070709;
     color: #ffffff;
     font-family: var(--font-body);
     margin: 0;
@@ -40,14 +36,8 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* ANTI-THEFT: Prevent Text Highlighting & Image Dragging */
-    user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-drag: none;
-    -webkit-user-drag: none;
 
-    /* Hide ugly default browser scrollbar for cinematic immersion */
+    /* Hide default browser scrollbar for cinematic immersion */
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -432,27 +422,6 @@ a:focus-visible, button:focus-visible {
     letter-spacing: 1px;
 }
 
-/* Timeline specific */
-.horizontal-scroll-wrapper {
-    width: 100%;
-    overflow: hidden; /* GSAP will move the inner container */
-    padding: 2rem 0;
-}
-
-.timeline-cards {
-    display: flex;
-    gap: 3rem;
-    width: max-content; /* Critical for horizontal scroll */
-}
-
-.t-card {
-    width: 400px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 2rem;
-    border-radius: 12px;
-}
-
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
@@ -468,9 +437,10 @@ a:focus-visible, button:focus-visible {
 }
 
 .scroll-indicator span {
-    font-family: var(--font-heading);
+    font-family: var(--font-sans);
     letter-spacing: 3px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .scroll-indicator .line {
@@ -495,7 +465,8 @@ a:focus-visible, button:focus-visible {
     
     /* Navigation */
     .nav-links { display: none; } /* Hide links on mobile to save space */
-    .logo { font-size: 1.4rem; }
+    .logo { font-size: 1.1rem; }
+    .sound-label { display: none; } /* Compact sound toggle on mobile */
     
     /* Typography Scaling */
     .massive-title { font-size: clamp(2.5rem, 12vw, 4rem); }
@@ -503,33 +474,8 @@ a:focus-visible, button:focus-visible {
     .subtitle { font-size: 1.1rem; }
     .lead { font-size: 1.1rem; margin-bottom: 1.5rem; }
     
-    /* Horizontal Timeline Optimization for Mobile */
-    .timeline-container { 
-        height: auto; 
-        min-height: 100vh;
-        overflow-x: hidden; 
-        overflow-y: auto; 
-        display: block; 
-    }
-    .timeline-content {
-        flex-direction: column;
-        align-items: center;
-        padding-top: 100px; /* Account for navbar */
-    }
-    .timeline-cards {
-        flex-direction: column;
-        width: 100%;
-        padding: 0 1.5rem;
-    }
-    .timeline-card {
-        width: 100%;
-        min-width: 100%;
-        margin-bottom: 2rem;
-    }
-    
-    
-    /* Anti-theft Visual Watermark */
-    .shreesha-watermark { font-size: 20vw !important; opacity: 0.5; }
+    /* Visual Watermark */
+    .shreesha-watermark { font-size: 20vw !important; opacity: 0.02 !important; }
 }
 /* ==========================================================================
    PREMIUM OVERHAUL: NOISE, MAGNETIC CURSOR, CLIP-PATH
@@ -579,61 +525,59 @@ a:focus-visible, button:focus-visible {
     will-change: transform;
 }
 /* ==========================================================================
-   PREMIUM $20,000 BUDGET ELEMENTS (PRELOADER & CURSOR)
+   INTERACTIVE CURSOR & MOTION LAYER
    ========================================================================== */
 
-/* Custom Cursor */
-* {
-    cursor: none !important;
+/* Custom Cursor - Enabled strictly on mouse/fine pointer devices */
+@media (hover: hover) and (pointer: fine) {
+    .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s, background-color 0.3s;
+        mix-blend-mode: difference;
+    }
+
+    .custom-cursor-follower {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s, border-color 0.3s;
+        mix-blend-mode: difference;
+    }
+
+    /* Hover state for cursor */
+    .custom-cursor.hover-active {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.1);
+        mix-blend-mode: normal;
+        backdrop-filter: blur(2px);
+    }
+    
+    .custom-cursor-follower.hover-active {
+        width: 80px;
+        height: 80px;
+        border-color: rgba(255, 255, 255, 0);
+    }
 }
 
-.custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
-    mix-blend-mode: difference;
-}
-
-.custom-cursor-follower {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, border-color 0.3s;
-    mix-blend-mode: difference;
-    /* GSAP will handle position smooth tracking */
-}
-
-/* Hover state for cursor */
-.custom-cursor.hover-active {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.1);
-    mix-blend-mode: normal;
-    backdrop-filter: blur(2px);
-}
-.custom-cursor-follower.hover-active {
-    width: 80px;
-    height: 80px;
-    border-color: rgba(255, 255, 255, 0);
-}
-
-/* Disable custom cursor on touch devices */
-@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+/* Fallback: completely hide custom cursor elements on non-pointer or touch devices */
+@media (hover: none) or (pointer: coarse), (max-width: 768px) {
     .custom-cursor, .custom-cursor-follower {
         display: none !important;
     }
@@ -1004,6 +948,123 @@ a:focus-visible, button:focus-visible {
     font-family: var(--font-sans);
     font-size: 0.8rem;
     color: var(--text-secondary);
+}
+
+/* SOURCES & METHODOLOGY SECTION */
+.sources-section {
+    padding: 8rem 2rem 6rem;
+    background: #09090c;
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 10;
+}
+
+.sources-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sources-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.source-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.source-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(233, 196, 106, 0.3);
+}
+
+.source-index {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    line-height: 1.2;
+}
+
+.source-content h4 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.source-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.cite-link {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.75em;
+    font-weight: 700;
+    margin-left: 0.25rem;
+    transition: var(--transition);
+}
+
+.cite-link:hover {
+    color: var(--accent-red);
+    text-decoration: underline;
+}
+
+.methodology-note {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .cinematic-img {
+        transform: none !important;
+        top: 0 !important;
+        height: 100% !important;
+    }
+
+    .film-grain {
+        display: none !important;
+    }
+
+    .custom-cursor, .custom-cursor-follower {
+        display: none !important;
+    }
+
+    .preloader {
+        display: none !important;
+    }
 }
 
 

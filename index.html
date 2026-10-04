@@ -11,17 +11,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Chronicle of Sonam Wangchuk's journey from Ladakh education reformer to the face of the 2026 Jantar Mantar Education Protests.">
-    <meta property="og:title" content="Sonam Wangchuk | The Jantar Mantar Epicenter">
-    <meta property="og:description" content="From a remote Himalayan village to the tear gas of Jantar Mantar. Discover the complete story of Sonam Wangchuk and his fight against the national education crisis.">
-    <meta property="og:image" content="https://voice-of-ladakh.vercel.app/src/hero-banner.jpg">
+    <meta name="description" content="A visual documentary timeline exploring Sonam Wangchuk's role in India's 2026 youth protests, the NEET-UG examination crisis, Jantar Mantar demonstrations, and the resignation of Education Minister Dharmendra Pradhan.">
+    <meta name="author" content="Shreesha Rao K">
+    <link rel="canonical" href="https://voice-of-ladakh.vercel.app/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://voice-of-ladakh.vercel.app/">
+    <meta property="og:site_name" content="Voice of Ladakh">
+    <meta property="og:title" content="Sonam Wangchuk & The 2026 Jantar Mantar Epicenter">
+    <meta property="og:description" content="An independent visual documentary examining Sonam Wangchuk's 26-day hunger strike, the student demonstrations in New Delhi, and the 2026 national examination controversy.">
+    <meta property="og:image" content="https://voice-of-ladakh.vercel.app/src/computer/hero-banner.jpg">
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <title>Sonam Wangchuk | The Jantar Mantar Epicenter</title>
+    <meta name="twitter:title" content="Sonam Wangchuk & The 2026 Jantar Mantar Epicenter">
+    <meta name="twitter:description" content="An independent visual documentary examining Sonam Wangchuk's 26-day hunger strike, the student demonstrations in New Delhi, and the 2026 national examination controversy.">
+    <meta name="twitter:image" content="https://voice-of-ladakh.vercel.app/src/computer/hero-banner.jpg">
+
+    <title>Sonam Wangchuk | The Jantar Mantar Epicenter — Independent Visual Chronicle</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Sonam Wangchuk & The 2026 Jantar Mantar Epicenter",
+      "description": "An independent visual documentary timeline exploring Sonam Wangchuk's 26-day hunger strike, the NEET-UG examination crisis, and the 2026 youth protests at Jantar Mantar.",
+      "author": {
+        "@type": "Person",
+        "name": "Shreesha Rao K"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Independent Documentary Project"
+      },
+      "datePublished": "2026-07-23",
+      "dateModified": "2026-10-04",
+      "mainEntityOfPage": "https://voice-of-ladakh.vercel.app/"
+    }
+    </script>
 </head>
 <body>
     <!-- CUSTOM CURSOR -->
@@ -52,12 +86,14 @@
             <ul class="nav-links">
                 <li><a href="#epicenter">Epicenter</a></li>
                 <li><a href="#foundation">Pioneer</a></li>
+                <li><a href="#politics">Politics</a></li>
                 <li><a href="#crackdown">Crackdown</a></li>
                 <li><a href="#aftermath">Resolution</a></li>
+                <li><a href="#sources">Sources</a></li>
             </ul>
             <button class="map-trigger" id="mapTrigger" aria-label="Open Chapter Map">MAP <span class="kbd">M</span></button>
             <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">EN</button>
-            <button class="sound-toggle" id="soundToggle" aria-label="Toggle Ambient Audio">
+            <button class="sound-toggle" id="soundToggle" aria-label="Toggle Ambient Audio" aria-pressed="false">
                 <span class="sound-label">SOUNDSCAPE</span>
                 <div class="sound-bars">
                     <span class="bar"></span>
@@ -76,15 +112,15 @@
             <div class="scene-bg">
                 <picture class="cinematic-img" style="display:block; width:100%; height:100%;">
                     <source media="(max-width: 768px)" srcset="src/phone/hero-banner.png">
-                    <img src="src/computer/hero-banner.jpg" alt="Jantar Mantar Protest" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    <img src="src/computer/hero-banner.jpg" alt="Jantar Mantar Protest" fetchpriority="high" style="width:100%; height:100%; object-fit:cover; display:block;">
                 </picture>
                 <div class="overlay gradient-dark"></div>
             </div>
             <div class="scene-content flex-center">
                 <div class="text-block text-center scrub-reveal">
-                    <span class="badge">July 2026 • New Delhi</span>
+                    <span class="badge">Independent Chronicle • Verified to Oct 4, 2026</span>
                     <h1 class="massive-title">The Jantar Mantar <br><span class="highlight">Epicenter</span></h1>
-                    <p class="subtitle max-w-800 mx-auto">A massive examination paper leak (NEET-UG) has sparked a youth-led revolution. At the center of the storm is Sonam Wangchuk, undertaking a brutal indefinite hunger strike in the sweltering heat of Delhi.</p>
+                    <p class="subtitle max-w-800 mx-auto">A nationwide examination crisis and allegations of irregularities fueled a youth-led movement demanding accountability across India's education system. At the center of the agitation was Sonam Wangchuk, undertaking an indefinite hunger strike in the summer heat of Delhi. <a href="#sources" class="cite-link">[1]</a></p>
                 </div>
             </div>
             <div class="scroll-indicator scrub-fade-out">
@@ -162,28 +198,28 @@
                 <div class="text-block text-center w-100 stagger-reveal">
                     <span class="section-tag text-red">Timeline of Escalation</span>
                     <h2 class="scene-title">Tear Gas & Barricades</h2>
-                    <p class="subtitle mx-auto">When the youth mobilized for the "Chalo Sansad" (March to Parliament), they were met with Section 163 prohibitory orders and immediate police force.</p>
+                    <p class="subtitle mx-auto">When student demonstrations mobilized for the "Chalo Sansad" (March to Parliament), authorities enforced Section 163 prohibitory regulations and deployed barricades.</p>
                     
                     <div class="editorial-timeline mt-5">
                         <div class="timeline-item" data-cursor="READ">
                             <span class="timeline-date">JULY 18, 2026</span>
                             <div class="timeline-body">
-                                <h3>The Midnight Raid</h3>
-                                <p>Under the cover of white sheets, police stormed Jantar Mantar. A critically ill Sonam Wangchuk was forcibly detained and hospitalized under heavy armed guard.</p>
+                                <h3>The Hospital Transfer</h3>
+                                <p>Delhi Police moved into the protest site early on July 18 and shifted Wangchuk from Jantar Mantar to hospital after his health deteriorated during the 20th day of his fast. Protest organisers described the removal as forced, while authorities stated the action followed medical advice and court directives. <a href="#sources" class="cite-link">[1][4]</a></p>
                             </div>
                         </div>
                         <div class="timeline-item" data-cursor="READ">
                             <span class="timeline-date">JULY 20, 2026</span>
                             <div class="timeline-body">
                                 <h3>Chalo Sansad March</h3>
-                                <p>Infuriated by the detention, tens of thousands attempted to breach Parliament barricades. Tear gas shells were fired, resulting in hundreds of student detentions.</p>
+                                <p>Following the police action, thousands of demonstrators attempted to march toward Parliament in defiance of prohibitory orders. Police deployed tear gas shells and water cannons, detaining numerous student demonstrators. <a href="#sources" class="cite-link">[5]</a></p>
                             </div>
                         </div>
                         <div class="timeline-item" data-cursor="READ">
                             <span class="timeline-date">JULY 23, 2026</span>
                             <div class="timeline-body">
-                                <h3>26-Day Fast Ends</h3>
-                                <p>Despite confinement at Medanta Hospital, Wangchuk maintained his strike until critical demands for educational reform were formally acknowledged.</p>
+                                <h3>26-Day Fast Concludes</h3>
+                                <p>At Medanta Hospital, Sonam Wangchuk formally concluded his 26-day indefinite hunger strike after receiving assurances regarding student protection and formal examination reforms. <a href="#sources" class="cite-link">[6]</a></p>
                             </div>
                         </div>
                     </div>
@@ -204,12 +240,12 @@
                 <div class="text-block scrub-reveal">
                     <span class="section-tag text-blue">Beyond Borders</span>
                     <h2 class="scene-title">A Global Echo</h2>
-                    <p class="text-secondary lead">The crackdown in Delhi sparked a chain reaction. Solidarity protests erupted nationwide—from Mumbai to Guwahati.</p>
-                    <p class="text-secondary">What began as an education reform protest has morphed into an international movement for accountability. Images of the Jantar Mantar crackdown have gone viral globally, drawing condemnation and shining a spotlight on the systemic failures failing a generation.</p>
+                    <p class="text-secondary lead">Coverage of the protests spread beyond India, bringing international attention to the dispute over examination integrity and education policy. <a href="#sources" class="cite-link">[5][6]</a></p>
+                    <p class="text-secondary">Solidarity gatherings occurred in multiple educational hubs across the country. Images and reports from Jantar Mantar circulated widely in international press outlets, drawing commentary on systemic testing procedures and transparency.</p>
                     
                     <div class="quote-block mt-4">
-                        <p><em>"This is no longer just about a leaked exam paper. This is a generational battle for the soul of India's educational future."</em></p>
-                        <span class="quote-author">— Global Media Editorial, July 2026</span>
+                        <p><em>"This controversy reflects a critical generational conversation on examination integrity and the institutional future of higher education."</em></p>
+                        <span class="quote-author">— Press Analysis & Commentary, July 2026</span>
                     </div>
                 </div>
             </div>
@@ -229,17 +265,20 @@
                     <h2 class="scene-title">Resignation & Resolution</h2>
                     
                     <div class="grid-3 mt-5 text-left">
-                        <div class="card-minimal">
-                            <h3 class="highlight">A Historic Fall</h3>
-                            <p>On July 25, yielding to the relentless pressure of the youth-led "Cockroach Janta Party" (CJP), Education Minister Dharmendra Pradhan resigned. A historic first for the administration.</p>
+                        <div class="card-minimal" data-evidence="resignation" data-cursor="READ" style="cursor: pointer;">
+                            <span class="badge mb-2">DOSSIER #01</span>
+                            <h3 class="highlight">Ministerial Resignation</h3>
+                            <p>On July 25, 2026, Union Education Minister Dharmendra Pradhan submitted his resignation amid mounting political scrutiny and youth demonstrations. The portfolio was subsequently reassigned to Pralhad Joshi. <a href="#sources" class="cite-link">[7]</a></p>
                         </div>
-                        <div class="card-minimal">
-                            <h3 class="highlight">Wangchuk Survives</h3>
-                            <p>Sonam Wangchuk successfully ended his grueling 26-day hunger strike on July 23. Recovering from hospitalization, he continues to hold the government to its promises.</p>
+                        <div class="card-minimal" data-evidence="wangchuk" data-cursor="READ" style="cursor: pointer;">
+                            <span class="badge mb-2">DOSSIER #02</span>
+                            <h3 class="highlight">Fasting Concluded</h3>
+                            <p>Sonam Wangchuk formally broke his 26-day fast on July 23 after receiving medical stabilization. In subsequent statements, he emphasized the importance of honoring commitments made to students. <a href="#sources" class="cite-link">[6]</a></p>
                         </div>
-                        <div class="card-minimal">
-                            <h3 class="highlight">The Road Ahead</h3>
-                            <p>As the CBI cracks down on the exam translators, the streets of Jantar Mantar are finally clear. The CJP prepares for a strategic summit on August 5 to chart the movement's future.</p>
+                        <div class="card-minimal" data-evidence="cbi" data-cursor="READ" style="cursor: pointer;">
+                            <span class="badge mb-2">DOSSIER #03</span>
+                            <h3 class="highlight">Official Inquiries</h3>
+                            <p>The Central Bureau of Investigation continued charge-sheet filings concerning question-paper leaks, while protest organizers scheduled regional meetings to debate policy proposals. <a href="#sources" class="cite-link">[8]</a></p>
                         </div>
                     </div>
                 </div>
@@ -252,17 +291,98 @@
                 <div class="stat-box">
                     <span class="stat-number" data-target="26">0</span>
                     <span class="stat-unit">DAYS</span>
-                    <span class="stat-label">Hunger Strike Duration</span>
+                    <span class="stat-label">Hunger Strike Duration <a href="#sources" class="cite-link">[1][6]</a></span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number" data-target="100">0</span>
-                    <span class="stat-unit">K+</span>
-                    <span class="stat-label">Youth & Students Mobilized</span>
+                    <span class="stat-number" data-target="18">0</span>
+                    <span class="stat-unit">JULY</span>
+                    <span class="stat-label">Hospitalization & Site Clearance <a href="#sources" class="cite-link">[4]</a></span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number" data-target="1">0</span>
-                    <span class="stat-unit">HISTORIC</span>
-                    <span class="stat-label">Ministerial Resignation</span>
+                    <span class="stat-number" data-target="25">0</span>
+                    <span class="stat-unit">JULY</span>
+                    <span class="stat-label">Ministerial Resignation Executed <a href="#sources" class="cite-link">[7]</a></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOURCES & METHODOLOGY SECTION -->
+        <section class="sources-section" id="sources">
+            <div class="sources-container">
+                <div class="sources-header">
+                    <span class="section-tag text-gold">Documentation & Verification</span>
+                    <h2 class="scene-title">Sources & Methodology</h2>
+                    <p class="text-secondary max-w-800 mx-auto">This independent visual chronicle compiles and contextualizes reporting from primary news agencies, official government communiqués, and court proceedings. Events are categorized to distinguish confirmed public records from reported allegations and protest statements.</p>
+                </div>
+
+                <div class="sources-grid mt-5">
+                    <div class="source-card">
+                        <span class="source-index">[1]</span>
+                        <div class="source-content">
+                            <h4>The Indian Express (July 18, 2026)</h4>
+                            <p>"Police move Sonam Wangchuk to hospital from Jantar Mantar after fast." Reporting confirms the start of Wangchuk's fast on June 28, 2026, and his subsequent transfer to Safdarjung/Medanta Hospital following medical recommendations.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[2]</span>
+                        <div class="source-content">
+                            <h4>SECMOL & Alternative Education Records (1988–2024)</h4>
+                            <p>Historical documentation of the Students' Educational and Cultural Movement of Ladakh (SECMOL), established in 1988 to reform localized education curricula.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[3]</span>
+                        <div class="source-content">
+                            <h4>India Today & Parliament Briefs (July 23, 2026)</h4>
+                            <p>Contemporary coverage of parliamentary deliberations regarding fast-track judicial courts for examination-leak inquiries and executive responses to student petitions.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[4]</span>
+                        <div class="source-content">
+                            <h4>Delhi Police Press Release & Court Directives (July 18, 2026)</h4>
+                            <p>Official police notifications and Delhi High Court filings concerning the enforcement of Section 163 prohibitory regulations and medical emergency transfers from Jantar Mantar.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[5]</span>
+                        <div class="source-content">
+                            <h4>Reuters / Internazionale (July 20, 2026)</h4>
+                            <p>"India's student movement supporters march toward Parliament despite police ban." Verified reports documenting barricades, tear-gas dispersal, and student detentions during the Chalo Sansad demonstration.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[6]</span>
+                        <div class="source-content">
+                            <h4>Al Jazeera & Hospital Bulletins (July 23, 2026)</h4>
+                            <p>"Indian activist Wangchuk ends 26-day hunger strike over exam paper leaks." Independent corroboration of the conclusion of Wangchuk's hunger strike following negotiations and assurances.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[7]</span>
+                        <div class="source-content">
+                            <h4>President of India, Press Communiqué (July 25, 2026)</h4>
+                            <p>Official notification of the President accepting the resignation of Union Education Minister Dharmendra Pradhan, and directing Cabinet Minister Pralhad Joshi to assume charge of the Ministry of Education.</p>
+                        </div>
+                    </div>
+
+                    <div class="source-card">
+                        <span class="source-index">[8]</span>
+                        <div class="source-content">
+                            <h4>Central Bureau of Investigation (CBI) Bulletins (July–August 2026)</h4>
+                            <p>Official status reports and charge-sheet summaries regarding arrests and memory-reconstruction inquiries into the NEET-UG testing protocols.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="methodology-note mt-5">
+                    <p><strong>Editorial Notice:</strong> <em>Voice of Ladakh</em> is an independent, non-partisan interactive documentary by Shreesha Rao K. Last cross-verified against verified public records on <strong>October 4, 2026</strong>.</p>
                 </div>
             </div>
         </section>
@@ -270,11 +390,11 @@
     </main>
 
     <!-- INVESTIGATIVE EVIDENCE DRAWER MODAL -->
-    <div class="modal-backdrop" id="evidenceModal">
+    <div class="modal-backdrop" id="evidenceModal" role="dialog" aria-modal="true" aria-labelledby="evidenceTitle">
         <div class="evidence-lightbox">
-            <button class="modal-close" id="closeEvidence">&times;</button>
+            <button class="modal-close" id="closeEvidence" aria-label="Close evidence dossier">&times;</button>
             <div class="evidence-header">
-                <span class="section-tag text-red">Investigative Evidence</span>
+                <span class="section-tag text-red">Archival Dossier</span>
                 <h3 id="evidenceTitle">Document Dossier</h3>
             </div>
             <div class="evidence-body" id="evidenceBody">
@@ -284,11 +404,11 @@
     </div>
 
     <!-- CHAPTER MAP MODAL -->
-    <div class="modal-backdrop" id="chapterMapModal">
+    <div class="modal-backdrop" id="chapterMapModal" role="dialog" aria-modal="true" aria-labelledby="chapterMapTitle">
         <div class="chapter-map-drawer">
-            <button class="modal-close" id="closeMap">&times;</button>
+            <button class="modal-close" id="closeMap" aria-label="Close chapter map">&times;</button>
             <span class="section-tag text-gold">Interactive Directory</span>
-            <h2>Narrative Chapters</h2>
+            <h2 id="chapterMapTitle">Narrative Chapters</h2>
             <div class="chapter-grid">
                 <a href="#epicenter" class="chapter-card">
                     <span class="chap-num">01</span>
@@ -300,20 +420,30 @@
                     <h4>The Education Pioneer</h4>
                     <p>Wangchuk's 38-year fight for systemic reform.</p>
                 </a>
-                <a href="#crackdown" class="chapter-card">
+                <a href="#politics" class="chapter-card">
                     <span class="chap-num">03</span>
+                    <h4>Political Gridlock</h4>
+                    <p>Parliamentary deliberations and core demands.</p>
+                </a>
+                <a href="#crackdown" class="chapter-card">
+                    <span class="chap-num">04</span>
                     <h4>Tear Gas & Barricades</h4>
-                    <p>July 18 midnight raid and parliamentary march.</p>
+                    <p>July 18 hospital transfer and parliamentary march.</p>
                 </a>
                 <a href="#global" class="chapter-card">
-                    <span class="chap-num">04</span>
+                    <span class="chap-num">05</span>
                     <h4>A Global Echo</h4>
                     <p>Nationwide solidarity and international coverage.</p>
                 </a>
                 <a href="#aftermath" class="chapter-card">
-                    <span class="chap-num">05</span>
+                    <span class="chap-num">06</span>
                     <h4>Resignation & Resolution</h4>
-                    <p>Ministerial fall and the strategic road ahead.</p>
+                    <p>Ministerial change and official inquiries.</p>
+                </a>
+                <a href="#sources" class="chapter-card">
+                    <span class="chap-num">07</span>
+                    <h4>Sources & Methodology</h4>
+                    <p>Cross-referenced journalism and public records.</p>
                 </a>
             </div>
             <div class="kbd-hint">Press <span class="kbd">ESC</span> to close or <span class="kbd">J</span> / <span class="kbd">K</span> to navigate</div>
@@ -325,8 +455,8 @@
         <div class="footer-content">
             <h2 class="footer-title split-line">VOICE OF LADAKH</h2>
             <div class="footer-details">
-                <p>Designed by Shreesha Rao K.</p>
-                <p>A narrative built for the Jantar Mantar Protests of 2026.</p>
+                <p>Designed and chronicled by Shreesha Rao K.</p>
+                <p>An independent interactive documentary of the 2026 Jantar Mantar demonstrations.</p>
             </div>
             <a href="#epicenter" class="back-to-top">Back to Top</a>
         </div>
@@ -336,8 +466,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
     
-    <!-- Premium Libraries -->
-    <script src="https://unpkg.com/split-type" defer></script>
+    <!-- Deterministic Pinned Libraries -->
+    <script src="https://unpkg.com/split-type@0.3.4/umd/index.js" defer></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" defer></script>
 
     <script src="script.js" defer></script>

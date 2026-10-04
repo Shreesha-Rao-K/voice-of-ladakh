@@ -12,115 +12,136 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.config({ force3D: true });
 
 /* ==========================================================================
-   PREMIUM $20,000 BUDGET ELEMENTS (PRELOADER & CURSOR)
+   CINEMATIC PRELOADER & INTERACTIVE CURSOR
    ========================================================================== */
 
-// 1. Cinematic Preloader
-const preloaderTextFill = document.querySelector('.preloader-text::after');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// 1. Cinematic Preloader (with load event acceleration)
 const preloaderProgress = document.querySelector('.preloader-progress');
 const preloader = document.querySelector('.preloader');
-
 let progress = { val: 0 };
-gsap.to(progress, {
-    val: 100,
-    duration: 2.5,
-    ease: "power2.inOut",
-    onUpdate: () => {
-        const p = Math.round(progress.val);
-        preloaderProgress.textContent = `${p}%`;
-        // We use CSS variable or direct style to update the pseudo-element width via JS is tricky, 
-        // so we manipulate a CSS variable on the text element.
-        document.querySelector('.preloader-text').style.setProperty('--progress', `${p}%`);
-    },
-    onComplete: () => {
-        gsap.to(preloader, {
-            yPercent: -100,
-            duration: 1,
-            ease: "expo.inOut",
-            onComplete: () => preloader.remove()
+let preloaderDismissed = false;
+
+function dismissPreloader() {
+    if (preloaderDismissed || !preloader) return;
+    preloaderDismissed = true;
+    gsap.to(preloader, {
+        yPercent: -100,
+        duration: 0.8,
+        ease: "expo.inOut",
+        onComplete: () => {
+            preloader.remove();
+            ScrollTrigger.refresh();
+        }
+    });
+}
+
+if (preloader && preloaderProgress) {
+    if (prefersReducedMotion) {
+        preloader.remove();
+    } else {
+        const preloaderTween = gsap.to(progress, {
+            val: 100,
+            duration: 1.5,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                const p = Math.round(progress.val);
+                preloaderProgress.textContent = `${p}%`;
+                document.querySelector('.preloader-text')?.style.setProperty('--progress', `${p}%`);
+            },
+            onComplete: dismissPreloader
+        });
+
+        window.addEventListener('load', () => {
+            gsap.to(progress, { val: 100, duration: 0.3, onComplete: dismissPreloader });
         });
     }
-});
+}
 
-// Fix pseudo element animation via inject style
-const style = document.createElement('style');
-style.innerHTML = `.preloader-text::after { width: var(--progress, 0%); }`;
-document.head.appendChild(style);
-
-// 2. Custom Cursor
+// 2. Custom Cursor (Enabled only on pointer-fine and non-reduced-motion devices)
 const cursor = document.querySelector('.custom-cursor');
 const follower = document.querySelector('.custom-cursor-follower');
 
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-let followerX = mouseX;
-let followerY = mouseY;
+if (cursor && follower && !prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let followerX = mouseX;
+    let followerY = mouseY;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    // Immediate cursor update
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-});
-
-// Smooth follower animation using GSAP ticker
-gsap.ticker.add(() => {
-    followerX += (mouseX - followerX) * 0.15;
-    followerY += (mouseY - followerY) * 0.15;
-    
-    follower.style.left = followerX + 'px';
-    follower.style.top = followerY + 'px';
-});
-
-// Add hover effects to all clickable elements (Magnetic interaction)
-const clickables = document.querySelectorAll('a, button, .card-glass');
-clickables.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hover-active');
-        follower.classList.add('magnetic-active');
-        gsap.to(el, { scale: 1.02, duration: 0.3, ease: "power2.out" });
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
     });
-    el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hover-active');
-        follower.classList.remove('magnetic-active');
-        gsap.to(el, { scale: 1, x: 0, y: 0, duration: 0.3, ease: "power2.out" });
+
+    gsap.ticker.add(() => {
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
     });
-    el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const elX = rect.left + rect.width / 2;
-        const elY = rect.top + rect.height / 2;
-        gsap.to(el, {
-            x: (mouseX - elX) * 0.1,
-            y: (mouseY - elY) * 0.1,
-            duration: 0.3,
-            ease: "power2.out"
+
+    const clickables = document.querySelectorAll('a, button, .card-glass, .card-minimal');
+    clickables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover-active');
+            follower.classList.add('magnetic-active');
+            gsap.to(el, { scale: 1.02, duration: 0.3, ease: "power2.out" });
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover-active');
+            follower.classList.remove('magnetic-active');
+            gsap.to(el, { scale: 1, x: 0, y: 0, duration: 0.3, ease: "power2.out" });
+        });
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const elX = rect.left + rect.width / 2;
+            const elY = rect.top + rect.height / 2;
+            gsap.to(el, {
+                x: (mouseX - elX) * 0.1,
+                y: (mouseY - elY) * 0.1,
+                duration: 0.3,
+                ease: "power2.out"
+            });
         });
     });
-});
+}
 
 /* ========================================================================== */
 
-// Initialize Lenis for Smooth Scrolling (Buttery smooth momentum)
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo.out
-    smoothWheel: true
-});
-
+// Smooth Scrolling with prefers-reduced-motion support
+let lenis = null;
 const progressBar = document.querySelector('.reading-progress-bar');
-lenis.on('scroll', (e) => {
-    ScrollTrigger.update();
-    if (progressBar && e.scroll !== undefined) {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progressPercent = (e.scroll / totalHeight) * 100;
-        progressBar.style.width = `${Math.min(100, Math.max(0, progressPercent))}%`;
-    }
-});
 
-gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(500, 33);
+if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo.out
+        smoothWheel: true
+    });
+
+    lenis.on('scroll', (e) => {
+        ScrollTrigger.update();
+        if (progressBar && e.scroll !== undefined) {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progressPercent = totalHeight > 0 ? (e.scroll / totalHeight) * 100 : 0;
+            progressBar.style.width = `${Math.min(100, Math.max(0, progressPercent))}%`;
+        }
+    });
+
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(500, 33);
+} else {
+    window.addEventListener('scroll', () => {
+        if (progressBar) {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progressPercent = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+            progressBar.style.width = `${Math.min(100, Math.max(0, progressPercent))}%`;
+        }
+    }, { passive: true });
+}
 
 // Soundscape Web Audio API Ambient Synthesizer
 const soundToggle = document.getElementById('soundToggle');
@@ -165,221 +186,296 @@ function initAudioSynth() {
 if (soundToggle) {
     soundToggle.addEventListener('click', () => {
         if (!audioCtx) initAudioSynth();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
         isAudioPlaying = !isAudioPlaying;
         soundToggle.classList.toggle('playing', isAudioPlaying);
+        soundToggle.setAttribute('aria-pressed', isAudioPlaying ? 'true' : 'false');
 
-        if (isAudioPlaying) {
-            masterGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 1.5);
-        } else {
-            masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+        if (masterGain && audioCtx) {
+            if (isAudioPlaying) {
+                masterGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 1.5);
+            } else {
+                masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+            }
         }
     });
 }
 
 // Data Cursor Text States Engine
-const dataCursors = document.querySelectorAll('[data-cursor]');
-dataCursors.forEach(el => {
-    const label = el.getAttribute('data-cursor');
-    el.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-text-active');
-        cursor.textContent = label;
+if (cursor) {
+    const dataCursors = document.querySelectorAll('[data-cursor]');
+    dataCursors.forEach(el => {
+        const label = el.getAttribute('data-cursor');
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-text-active');
+            cursor.textContent = label;
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-text-active');
+            cursor.textContent = '';
+        });
     });
-    el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-text-active');
-        cursor.textContent = '';
-    });
-});
+}
 
 // Navbar styling on scroll
 const navbar = document.getElementById('navbar');
-ScrollTrigger.create({
-    start: "top -50",
-    end: 99999,
-    toggleClass: {className: 'scrolled', targets: navbar}
-});
-
-// Premium SplitType Heading Animations
-const titles = document.querySelectorAll('.scene-title, .text-5xl, h1');
-titles.forEach(title => {
-    const split = new SplitType(title, { types: 'lines, words', lineClass: 'split-line' });
-    gsap.from(split.words, {
-        y: 100,
-        opacity: 0,
-        rotationZ: 5,
-        duration: 1.2,
-        stagger: 0.04,
-        ease: "expo.out",
-        scrollTrigger: {
-            trigger: title,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-        }
+if (navbar) {
+    ScrollTrigger.create({
+        start: "top -50",
+        end: 99999,
+        toggleClass: { className: 'scrolled', targets: navbar }
     });
-});
+}
+
+// Heading Animations (Motion-sensitive)
+if (!prefersReducedMotion && typeof SplitType !== 'undefined') {
+    const titles = document.querySelectorAll('.scene-title, .text-5xl, h1');
+    titles.forEach(title => {
+        const split = new SplitType(title, { types: 'lines, words', lineClass: 'split-line' });
+        gsap.from(split.words, {
+            y: 100,
+            opacity: 0,
+            rotationZ: 5,
+            duration: 1.2,
+            stagger: 0.04,
+            ease: "expo.out",
+            scrollTrigger: {
+                trigger: title,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+}
 
 // Setup Cinematic Scenes
 const scenes = document.querySelectorAll('.scene');
 
-scenes.forEach((scene, i) => {
+scenes.forEach((scene) => {
     const bgImage = scene.querySelector('.cinematic-img');
     const scrubReveals = scene.querySelectorAll('.scrub-reveal');
     const staggerReveals = scene.querySelectorAll('.stagger-reveal');
 
-    // Premium Clip-Path Reveal with Scale
-    if (bgImage) {
-        // Dynamically wrap the image in a clip-path container if not already
-        if (!bgImage.parentElement.classList.contains('clip-reveal-container')) {
-             const wrapper = document.createElement('div');
-             wrapper.className = 'clip-reveal-container';
-             wrapper.style.width = '100%';
-             wrapper.style.height = '100%';
-             wrapper.style.position = 'absolute';
-             wrapper.style.top = '0';
-             wrapper.style.left = '0';
-             bgImage.parentNode.insertBefore(wrapper, bgImage);
-             wrapper.appendChild(bgImage);
-             bgImage.classList.add('clip-reveal-img');
+    if (!prefersReducedMotion) {
+        // Premium Clip-Path Reveal with Scale
+        if (bgImage) {
+            if (!bgImage.parentElement.classList.contains('clip-reveal-container')) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'clip-reveal-container';
+                wrapper.style.width = '100%';
+                wrapper.style.height = '100%';
+                wrapper.style.position = 'absolute';
+                wrapper.style.top = '0';
+                wrapper.style.left = '0';
+                bgImage.parentNode.insertBefore(wrapper, bgImage);
+                wrapper.appendChild(bgImage);
+                bgImage.classList.add('clip-reveal-img');
+            }
+
+            gsap.to(bgImage.parentElement, {
+                clipPath: "inset(0% 0 0 0)",
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: scene,
+                    start: "top 80%",
+                    end: "center center",
+                    scrub: 1.5
+                }
+            });
+
+            gsap.to(bgImage, {
+                scale: 1,
+                yPercent: 15,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: scene,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
         }
 
-        gsap.to(bgImage.parentElement, {
-            clipPath: "inset(0% 0 0 0)",
-            ease: "expo.out",
-            scrollTrigger: {
-                trigger: scene,
-                start: "top 80%",
-                end: "center center",
-                scrub: 1.5
-            }
-        });
-        
-        gsap.to(bgImage, {
-            scale: 1,
-            yPercent: 15,
-            ease: "none",
-            scrollTrigger: {
-                trigger: scene,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true
-            }
-        });
-    }
+        // Scrub reveal
+        if (scrubReveals.length > 0) {
+            gsap.from(scrubReveals, {
+                opacity: 0,
+                y: 40,
+                scrollTrigger: {
+                    trigger: scene,
+                    start: "top 75%",
+                    end: "center center",
+                    scrub: 1.5
+                }
+            });
+        }
 
-    // Scrub reveal (Refined to be smoother)
-    if (scrubReveals.length > 0) {
-        gsap.from(scrubReveals, {
-            opacity: 0,
-            y: 40,
-            scrollTrigger: {
-                trigger: scene,
-                start: "top 75%",
-                end: "center center",
-                scrub: 1.5 // Added smoothing to scrub
-            }
-        });
-    }
-
-    // Stagger reveal (Refined ease)
-    if (staggerReveals.length > 0) {
-        const children = staggerReveals[0].children;
-        gsap.from(children, {
-            opacity: 0,
-            y: 40,
-            stagger: 0.15,
-            duration: 1.2,
-            ease: "expo.out",
-            scrollTrigger: {
-                trigger: scene,
-                start: "top 70%",
-                toggleActions: "play none none reverse"
-            }
-        });
+        // Stagger reveal
+        if (staggerReveals.length > 0) {
+            const children = staggerReveals[0].children;
+            gsap.from(children, {
+                opacity: 0,
+                y: 40,
+                stagger: 0.15,
+                duration: 1.2,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: scene,
+                    start: "top 70%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        }
     }
 });
 
-// Horizontal Scroll for Timeline
-const timelineSection = document.getElementById('timeline');
-const timelineCards = document.querySelector('.timeline-cards');
-
-if (timelineSection && timelineCards) {
-    // Calculate how far to scroll left
-    function getScrollAmount() {
-        let cardsWidth = timelineCards.scrollWidth;
-        let distance = cardsWidth - window.innerWidth + 100; // 100px padding
-        // If the content is smaller than the window, don't scroll
-        return distance > 0 ? -distance : 0;
-    }
-
-    const tween = gsap.to(timelineCards, {
-        x: () => getScrollAmount(),
-        ease: "none"
-    });
-
-    ScrollTrigger.create({
-        trigger: timelineSection,
-        start: "top top",
-        end: () => `+=${getScrollAmount() * -1}`,
-        pin: true,
-        animation: tween,
-        scrub: 1,
-        invalidateOnRefresh: true
-    });
-}
-
-// GSAP Animated Impact Tickers
+// Impact Tickers (Motion-sensitive)
 const statNumbers = document.querySelectorAll('.stat-number');
 statNumbers.forEach(stat => {
-    const target = parseInt(stat.getAttribute('data-target'));
-    gsap.to(stat, {
-        innerText: target,
-        duration: 2.5,
-        ease: "power2.out",
-        snap: { innerText: 1 },
-        scrollTrigger: {
-            trigger: stat,
-            start: "top 85%",
-            once: true
-        }
-    });
+    const target = parseInt(stat.getAttribute('data-target'), 10);
+    if (isNaN(target)) return;
+    if (prefersReducedMotion) {
+        stat.innerText = target;
+    } else {
+        gsap.to(stat, {
+            innerText: target,
+            duration: 2.5,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            scrollTrigger: {
+                trigger: stat,
+                start: "top 85%",
+                once: true
+            }
+        });
+    }
 });
 
-// Modals: Chapter Map & Evidence Lightbox
+// Modals: Accessible Chapter Map & Evidence Dossiers
 const chapterMapModal = document.getElementById('chapterMapModal');
 const mapTrigger = document.getElementById('mapTrigger');
 const closeMap = document.getElementById('closeMap');
 
-function openMap() { chapterMapModal.classList.add('active'); }
-function closeMapModal() { chapterMapModal.classList.remove('active'); }
+const evidenceModal = document.getElementById('evidenceModal');
+const closeEvidence = document.getElementById('closeEvidence');
+const evidenceTitle = document.getElementById('evidenceTitle');
+const evidenceBody = document.getElementById('evidenceBody');
 
-if (mapTrigger) mapTrigger.addEventListener('click', openMap);
-if (closeMap) closeMap.addEventListener('click', closeMapModal);
+let lastFocusedElement = null;
+
+function openModal(modalEl) {
+    if (!modalEl) return;
+    lastFocusedElement = document.activeElement;
+    modalEl.classList.add('active');
+    modalEl.setAttribute('aria-hidden', 'false');
+    const focusable = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length > 0) focusable[0].focus();
+}
+
+function closeModal(modalEl) {
+    if (!modalEl) return;
+    modalEl.classList.remove('active');
+    modalEl.setAttribute('aria-hidden', 'true');
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+    }
+}
+
+const dossiers = {
+    resignation: {
+        title: "Official Cabinet Resignation Brief (July 25, 2026)",
+        content: `
+            <p><strong>Document Ref:</strong> Rashtrapati Bhavan Press Communiqué (July 25, 2026)</p>
+            <p><strong>Status:</strong> Accepted by President; Portfolio assigned to Pralhad Joshi</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+            <p>Following weeks of sustained student demonstrations at Jantar Mantar and nationwide protests over exam paper leaks, Union Education Minister Dharmendra Pradhan submitted his formal resignation. As reported by Reuters and official communiqués, Parliamentary Affairs Minister Pralhad Joshi was assigned the Education Ministry portfolio.</p>
+            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [6] [7]</a></p>
+        `
+    },
+    wangchuk: {
+        title: "Medical Record & Fast Resolution (July 23, 2026)",
+        content: `
+            <p><strong>Subject:</strong> Sonam Wangchuk</p>
+            <p><strong>Status:</strong> Hospitalized under court advisory; 26-day fast concluded</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+            <p>Sonam Wangchuk commenced his indefinite hunger strike at Jantar Mantar on June 28, 2026. On July 18, after medical assessments indicated deteriorating vitals, Delhi Police moved him to Safdarjung and later Medanta Hospital. On July 23, following 26 days of fasting, Wangchuk concluded the hunger strike amidst student and civil assurances.</p>
+            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [3] [4] [5]</a></p>
+        `
+    },
+    cbi: {
+        title: "CBI Investigation Summary: Exam Leak Probe",
+        content: `
+            <p><strong>Agency:</strong> Central Bureau of Investigation (CBI)</p>
+            <p><strong>Status:</strong> Arrests executed; charge-sheets prepared</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+            <p>Investigative bulletins detailed inquiries into translation centers and examination distribution chains. Concurrently, youth groups and student assemblies organized nationwide coordinate meetings for ongoing transparency reforms.</p>
+            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [8]</a></p>
+        `
+    }
+};
+
+function openEvidenceModal(key) {
+    const doc = dossiers[key];
+    if (!doc) return;
+    if (evidenceTitle) evidenceTitle.textContent = doc.title;
+    if (evidenceBody) evidenceBody.innerHTML = doc.content;
+    openModal(evidenceModal);
+}
+
+if (mapTrigger) mapTrigger.addEventListener('click', () => openModal(chapterMapModal));
+if (closeMap) closeMap.addEventListener('click', () => closeModal(chapterMapModal));
+if (closeEvidence) closeEvidence.addEventListener('click', () => closeModal(evidenceModal));
+
+document.querySelectorAll('[data-evidence]').forEach(card => {
+    card.addEventListener('click', () => {
+        const key = card.getAttribute('data-evidence');
+        openEvidenceModal(key);
+    });
+});
 
 // Close Modals on Backdrop Click
 document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
     backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) backdrop.classList.remove('active');
+        if (e.target === backdrop) closeModal(backdrop);
     });
 });
 
 // Keyboard Navigation & Shortcuts ('M', 'J', 'K', 'ESC')
-const sceneIds = ['epicenter', 'foundation', 'crackdown', 'aftermath', 'stats'];
+const sceneIds = ['epicenter', 'foundation', 'politics', 'crackdown', 'global', 'aftermath', 'stats', 'sources'];
 let currentSceneIndex = 0;
 
 document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
     if (e.key === 'm' || e.key === 'M') {
-        chapterMapModal.classList.contains('active') ? closeMapModal() : openMap();
+        if (chapterMapModal) {
+            chapterMapModal.classList.contains('active') ? closeModal(chapterMapModal) : openModal(chapterMapModal);
+        }
     } else if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-backdrop').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.modal-backdrop.active').forEach(b => closeModal(b));
     } else if (e.key === 'j' || e.key === 'J' || e.key === 'ArrowDown') {
+        if (e.key === 'ArrowDown' && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 50) return;
         currentSceneIndex = Math.min(sceneIds.length - 1, currentSceneIndex + 1);
         const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
-        if (targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl);
+        if (targetEl) {
+            if (lenis) {
+                lenis.scrollTo(targetEl);
+            } else {
+                targetEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            }
+        }
     } else if (e.key === 'k' || e.key === 'K' || e.key === 'ArrowUp') {
+        if (e.key === 'ArrowUp' && window.scrollY <= 50) return;
         currentSceneIndex = Math.max(0, currentSceneIndex - 1);
         const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
-        if (targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl);
+        if (targetEl) {
+            if (lenis) {
+                lenis.scrollTo(targetEl);
+            } else {
+                targetEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            }
+        }
     }
 });
 
@@ -392,8 +488,10 @@ const translations = {
         'VOICE OF LADAKH': 'लद्दाख की आवाज',
         'Epicenter': 'मुख्य केंद्र',
         'Pioneer': 'क्रांतिकारी',
+        'Politics': 'राजनीति',
         'Crackdown': 'कार्रवाई',
         'Resolution': 'समाधान',
+        'Sources': 'स्रोत व साक्ष्य',
         'SCROLL TO EXPLORE': 'खोजने के लिए स्क्रॉल करें',
         'Resignation & Resolution': 'इस्तीफा और संकल्प'
     },
@@ -401,8 +499,10 @@ const translations = {
         'लद्दाख की आवाज': 'VOICE OF LADAKH',
         'मुख्य केंद्र': 'Epicenter',
         'क्रांतिकारी': 'Pioneer',
+        'राजनीति': 'Politics',
         'कार्रवाई': 'Crackdown',
         'समाधान': 'Resolution',
+        'स्रोत व साक्ष्य': 'Sources',
         'खोजने के लिए स्क्रॉल करें': 'SCROLL TO EXPLORE',
         'इस्तीफा और संकल्प': 'Resignation & Resolution'
     }
@@ -428,26 +528,12 @@ if (langToggle) {
     });
 }
 
-
 /* ==============================================================================
- *  ANTI-THEFT PROTOCOLS (Property of Shreesha Rao K)
+ *  DOCUMENTARY ATTRIBUTION & CREDITS
  * ============================================================================== */
-// Disable right-click context menu
-document.addEventListener('contextmenu', event => event.preventDefault());
-
-// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || 
-        (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's'))) {
-        e.preventDefault();
-        console.warn("PROPERTY OF SHREESHA RAO K. ACCESS DENIED.");
-    }
-});
-
-console.log("%c STOP! ", "font-size: 40px; font-weight: bold; color: red; text-shadow: 2px 2px 0 #000;");
-console.log("%c This website, its design, and code are the exclusive property of Shreesha Rao K.", "font-size: 18px; color: yellow;");
-console.log("%c Unauthorized cloning, copying, or distribution is strictly prohibited.", "font-size: 16px; color: white;");
+console.log("%c VOICE OF LADAKH — DOCUMENTARY ARCHIVE ", "background: #d4af37; color: #0a0a0c; font-size: 13px; font-weight: bold; padding: 4px 8px; border-radius: 2px;");
+console.log("%c Curated and developed by Shreesha Rao K.", "font-size: 12px; color: #aaa;");
+console.log("%c Sourced and documented under #sources.", "font-size: 11px; color: #888;");
 
 // Ensure ScrollTrigger recalculates after images load
 window.addEventListener('load', () => {
