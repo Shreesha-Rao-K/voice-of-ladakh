@@ -1,18 +1,52 @@
+Dual License: MIT (Code) & Creative Commons Attribution-NonCommercial 4.0 (Content)
+
+==============================================================================
+1. CODEBASE LICENSE (MIT License)
+==============================================================================
+
 Copyright (c) 2026 Shreesha Rao K
 
-*** ALL RIGHTS RESERVED ***
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This software, including all associated code, markup, styling, graphical assets, and content (collectively referred to as "The Software"), is the exclusive intellectual property of Shreesha Rao K.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-1. PERMISSIONS
-You are granted no rights or licenses to The Software. You may NOT:
-- Copy, clone, or duplicate any portion of The Software.
-- Modify, adapt, translate, or create derivative works.
-- Distribute, sublicense, lease, or rent The Software.
-- Host, deploy, or run The Software for commercial or non-commercial purposes without explicit written consent.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-2. ENFORCEMENT
-Any unauthorized use, reproduction, or distribution of The Software will be pursued to the fullest extent of the law. 
+==============================================================================
+2. DOCUMENTARY TEXT & CURATION LICENSE (CC BY-NC 4.0)
+==============================================================================
 
-3. DISCLAIMER
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The editorial narrative, chronological curation, and textual analysis in this
+repository are licensed under the Creative Commons Attribution-NonCommercial 
+4.0 International License (CC BY-NC 4.0).
+
+You are free to:
+- Share: copy and redistribute the material in any medium or format.
+- Adapt: remix, transform, and build upon the material for non-commercial purposes.
+
+Under the following terms:
+- Attribution: You must give appropriate credit to Shreesha Rao K and link to
+  the original project.
+- NonCommercial: You may not use the material for commercial purposes.
+
+==============================================================================
+3. THIRD-PARTY ASSETS & FAIR USE NOTICE
+==============================================================================
+
+Visual media, archival imagery, quotes, and primary documents referenced in this
+project belong to their respective copyright holders and news organizations
+(including The Indian Express, Reuters, Al Jazeera, SECMOL, and public records).
+They are incorporated under Fair Dealing / Fair Use principles for non-profit
+documentary, archival, educational, and public-interest review.

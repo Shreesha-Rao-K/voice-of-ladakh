@@ -387,30 +387,30 @@ const dossiers = {
         title: "Official Cabinet Resignation Brief (July 25, 2026)",
         content: `
             <p><strong>Document Ref:</strong> Rashtrapati Bhavan Press Communiqué (July 25, 2026)</p>
-            <p><strong>Status:</strong> Accepted by President; Portfolio assigned to Pralhad Joshi</p>
+            <p><strong>Action Taken:</strong> Resignation Accepted; Additional Charge Assigned</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
-            <p>Following weeks of sustained student demonstrations at Jantar Mantar and nationwide protests over exam paper leaks, Union Education Minister Dharmendra Pradhan submitted his formal resignation. As reported by Reuters and official communiqués, Parliamentary Affairs Minister Pralhad Joshi was assigned the Education Ministry portfolio.</p>
-            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [6] [7]</a></p>
+            <p>Following weeks of student demonstrations at Jantar Mantar and parliamentary deadlocks, Union Education Minister Dharmendra Pradhan submitted his formal resignation to President Droupadi Murmu. The President accepted the resignation and directed Parliamentary Affairs Minister Pralhad Joshi to assume additional charge of the Ministry of Education.</p>
+            <p style="margin-top: 0.75rem;"><a href="#source-7" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Primary Reference [7]</a></p>
         `
     },
     wangchuk: {
-        title: "Medical Record & Fast Resolution (July 23, 2026)",
+        title: "Hunger Strike Resolution & Assurances (July 23, 2026)",
         content: `
             <p><strong>Subject:</strong> Sonam Wangchuk</p>
-            <p><strong>Status:</strong> Hospitalized under court advisory; 26-day fast concluded</p>
+            <p><strong>Resolution:</strong> Fast broken at Medanta Hospital after 26 days</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
-            <p>Sonam Wangchuk commenced his indefinite hunger strike at Jantar Mantar on June 28, 2026. On July 18, after medical assessments indicated deteriorating vitals, Delhi Police moved him to Safdarjung and later Medanta Hospital. On July 23, following 26 days of fasting, Wangchuk concluded the hunger strike amidst student and civil assurances.</p>
-            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [3] [4] [5]</a></p>
+            <p>After being transferred from Safdarjung to Medanta Hospital pursuant to a Delhi High Court order on July 21, Sonam Wangchuk formally concluded his 26-day indefinite fast on July 23 in the presence of Union Ministers J.P. Nadda and Jitendra Singh. The resolution followed direct talks, a joint appeal signed by 65 Members of Parliament, and written commitments addressing testing oversight and student protection.</p>
+            <p style="margin-top: 0.75rem;"><a href="#source-6" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Primary Reference [6]</a></p>
         `
     },
     cbi: {
-        title: "CBI Investigation Summary: Exam Leak Probe",
+        title: "CBI Judicial Chargesheet: NEET-UG 2026 (July 28, 2026)",
         content: `
             <p><strong>Agency:</strong> Central Bureau of Investigation (CBI)</p>
-            <p><strong>Status:</strong> Arrests executed; charge-sheets prepared</p>
+            <p><strong>Status:</strong> 13 Accused Indicted; Continued Probe Sanctioned</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
-            <p>Investigative bulletins detailed inquiries into translation centers and examination distribution chains. Concurrently, youth groups and student assemblies organized nationwide coordinate meetings for ongoing transparency reforms.</p>
-            <p style="margin-top: 0.75rem;"><a href="#sources" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Sources & Reporting Ref [8]</a></p>
+            <p>On July 28, 2026, the CBI submitted its initial comprehensive chargesheet before the Special Court, naming 13 individuals—including examination translators, testing center administrators, and coaching intermediaries—for criminal conspiracy and breach of testing integrity. The court granted authorization for further forensic probes.</p>
+            <p style="margin-top: 0.75rem;"><a href="#source-8" class="cite-link" style="font-size: 0.8rem; text-decoration: underline;">View Primary Reference [8]</a></p>
         `
     }
 };
@@ -427,10 +427,18 @@ if (mapTrigger) mapTrigger.addEventListener('click', () => openModal(chapterMapM
 if (closeMap) closeMap.addEventListener('click', () => closeModal(chapterMapModal));
 if (closeEvidence) closeEvidence.addEventListener('click', () => closeModal(evidenceModal));
 
+// Interactive Dossier Cards: Click & Keyboard (Enter/Space)
 document.querySelectorAll('[data-evidence]').forEach(card => {
-    card.addEventListener('click', () => {
+    const trigger = () => {
         const key = card.getAttribute('data-evidence');
         openEvidenceModal(key);
+    };
+    card.addEventListener('click', trigger);
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            trigger();
+        }
     });
 });
 
@@ -441,7 +449,8 @@ document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
     });
 });
 
-// Keyboard Navigation & Shortcuts ('M', 'J', 'K', 'ESC')
+// Keyboard Chapter Navigation ('M' for Map, 'J' Next, 'K' Prev, 'ESC' Dismiss)
+// Arrow keys are intentionally NOT hijacked to respect native smooth scrolling.
 const sceneIds = ['epicenter', 'foundation', 'politics', 'crackdown', 'global', 'aftermath', 'stats', 'sources'];
 let currentSceneIndex = 0;
 
@@ -454,8 +463,7 @@ document.addEventListener('keydown', (e) => {
         }
     } else if (e.key === 'Escape') {
         document.querySelectorAll('.modal-backdrop.active').forEach(b => closeModal(b));
-    } else if (e.key === 'j' || e.key === 'J' || e.key === 'ArrowDown') {
-        if (e.key === 'ArrowDown' && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 50) return;
+    } else if (e.key === 'j' || e.key === 'J') {
         currentSceneIndex = Math.min(sceneIds.length - 1, currentSceneIndex + 1);
         const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
         if (targetEl) {
@@ -465,8 +473,7 @@ document.addEventListener('keydown', (e) => {
                 targetEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
             }
         }
-    } else if (e.key === 'k' || e.key === 'K' || e.key === 'ArrowUp') {
-        if (e.key === 'ArrowUp' && window.scrollY <= 50) return;
+    } else if (e.key === 'k' || e.key === 'K') {
         currentSceneIndex = Math.max(0, currentSceneIndex - 1);
         const targetEl = document.getElementById(sceneIds[currentSceneIndex]);
         if (targetEl) {
@@ -490,6 +497,7 @@ const translations = {
         'Pioneer': 'क्रांतिकारी',
         'Politics': 'राजनीति',
         'Crackdown': 'कार्रवाई',
+        'Solidarity': 'एकजुटता',
         'Resolution': 'समाधान',
         'Sources': 'स्रोत व साक्ष्य',
         'SCROLL TO EXPLORE': 'खोजने के लिए स्क्रॉल करें',
@@ -501,6 +509,7 @@ const translations = {
         'क्रांतिकारी': 'Pioneer',
         'राजनीति': 'Politics',
         'कार्रवाई': 'Crackdown',
+        'एकजुटता': 'Solidarity',
         'समाधान': 'Resolution',
         'स्रोत व साक्ष्य': 'Sources',
         'खोजने के लिए स्क्रॉल करें': 'SCROLL TO EXPLORE',
@@ -512,6 +521,7 @@ if (langToggle) {
     langToggle.addEventListener('click', () => {
         currentLang = currentLang === 'EN' ? 'HI' : 'EN';
         langToggle.textContent = currentLang;
+        langToggle.setAttribute('aria-label', currentLang === 'EN' ? 'Language: English (Switch to Hindi)' : 'Language: Hindi (Switch to English)');
 
         const dict = translations[currentLang];
         if (!dict) return;
@@ -531,9 +541,9 @@ if (langToggle) {
 /* ==============================================================================
  *  DOCUMENTARY ATTRIBUTION & CREDITS
  * ============================================================================== */
-console.log("%c VOICE OF LADAKH — DOCUMENTARY ARCHIVE ", "background: #d4af37; color: #0a0a0c; font-size: 13px; font-weight: bold; padding: 4px 8px; border-radius: 2px;");
+console.log("%c VOICE OF LADAKH — INDEPENDENT DOCUMENTARY ", "background: #d4af37; color: #0a0a0c; font-size: 13px; font-weight: bold; padding: 4px 8px; border-radius: 2px;");
 console.log("%c Curated and developed by Shreesha Rao K.", "font-size: 12px; color: #aaa;");
-console.log("%c Sourced and documented under #sources.", "font-size: 11px; color: #888;");
+console.log("%c Primary reporting and methodology cited under #sources.", "font-size: 11px; color: #888;");
 
 // Ensure ScrollTrigger recalculates after images load
 window.addEventListener('load', () => {
